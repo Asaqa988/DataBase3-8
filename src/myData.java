@@ -11,7 +11,7 @@ import org.openqa.selenium.edge.EdgeDriver;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
-public class myTestcase {
+public class myData {
 
 	
 	WebDriver driver = new EdgeDriver();
@@ -89,12 +89,7 @@ public class myTestcase {
 		System.out.println(email);
 		System.out.println(password);
 	}
-	driver.findElement(By.id("AccountFrm_firstname")).sendKeys(CustomerFirstNameInDataBase);
-	;
-	driver.findElement(By.id("AccountFrm_lastname")).sendKeys(CustomerLastNameInDataBase);
-	;
-	driver.findElement(By.id("AccountFrm_email")).sendKeys(email);
-	;
+
 	
 		
 	}
