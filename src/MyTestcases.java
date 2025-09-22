@@ -1,5 +1,4 @@
 
-
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.time.Duration;
@@ -25,7 +24,6 @@ public class MyTestcases extends myData {
 	public void myBeforeTest() throws SQLException {
 		con = DriverManager.getConnection("jdbc:mysql://localhost:3306/classicmodels", "root", "abed");
 
-		
 		driver.get(myWebSite);
 
 		driver.manage().window().maximize();
@@ -38,7 +36,7 @@ public class MyTestcases extends myData {
 
 	public void AddNewRecord() throws SQLException {
 
-		String query = "INSERT INTO customers (customerNumber, customerName, contactLastName, contactFirstName, phone, addressLine1, city, country, salesRepEmployeeNumber, creditLimit) VALUES (999, 'Abc Company', 'ali', 'ahmad', '962797700235', '123 Main St', 'Los Angeles', 'Spain', 1370, 50000.00)";
+		String query = "INSERT INTO customers (customerNumber, customerName, contactLastName, contactFirstName, phone, addressLine1, city,postalCode, country, salesRepEmployeeNumber, creditLimit) VALUES (999, 'Abc Company', 'ali', 'ahmad', '962797700235', '123 Main St', 'Los Angeles',69541,'Spain', 1370, 50000.00)";
 
 		stmt = con.createStatement();
 
@@ -67,8 +65,13 @@ public class MyTestcases extends myData {
 
 			;
 
-			email = CustomerFirstNameInDataBase + CustomerLastNameInDataBase + "@gmail.com";
-			password = "123!@#P@ssw0rd";
+			email = CustomerFirstNameInDataBase + CustomerLastNameInDataBase + randomNumberForTheEmail + "@gmail.com";
+
+			address = rs.getString("addressLine1").toString().trim();
+
+			ThePostalcode = rs.getString("postalCode").toString().trim();
+
+			loginName = CustomerFirstNameInDataBase + CustomerLastNameInDataBase;
 
 		}
 
@@ -98,11 +101,10 @@ public class MyTestcases extends myData {
 
 	}
 
-	@Test(priority = 5,enabled = true)
+	@Test(priority = 5, enabled = true)
 	public void SignupTest() throws InterruptedException {
 
 		driver.navigate().to(SignupPage);
-
 
 		// Webelements
 		WebElement FirstName = driver.findElement(By.id("AccountFrm_firstname"));
@@ -124,46 +126,46 @@ public class MyTestcases extends myData {
 
 		List<WebElement> AlltheStates = TheState.findElements(By.tagName("option"));
 
-//		String theCity = AlltheStates.get(theSelectStateIndex).getText();
+		String theCity = AlltheStates.get(1).getText();
 //
-//		WebElement TheCityInput = driver.findElement(By.id("AccountFrm_city"));
+		WebElement TheCityInput = driver.findElement(By.id("AccountFrm_city"));
 //
-//		WebElement ThePostalCode = driver.findElement(By.id("AccountFrm_postcode"));
+		WebElement ThePostalCode = driver.findElement(By.id("AccountFrm_postcode"));
 //
-//		WebElement LoginName = driver.findElement(By.id("AccountFrm_loginname"));
+		WebElement LoginName = driver.findElement(By.id("AccountFrm_loginname"));
 //
-//		WebElement ThePassword = driver.findElement(By.id("AccountFrm_password"));
-//		WebElement TheConfirmPassword = driver.findElement(By.id("AccountFrm_confirm"));
+		WebElement ThePassword = driver.findElement(By.id("AccountFrm_password"));
+		WebElement TheConfirmPassword = driver.findElement(By.id("AccountFrm_confirm"));
 //
-//		WebElement AgreeCheckBox = driver.findElement(By.id("AccountFrm_agree"));
+		WebElement AgreeCheckBox = driver.findElement(By.id("AccountFrm_agree"));
 //
-//		WebElement CountinueButton = driver.findElement(By.xpath("//button[@title='Continue']"));
+		WebElement CountinueButton = driver.findElement(By.xpath("//button[@title='Continue']"));
 //		// -- Actions --
-//		FirstName.sendKeys(TheFirstName);
-//		LastName.sendKeys(TheLastName);
-//		Email.sendKeys(TheEmail);
+		FirstName.sendKeys(CustomerFirstNameInDataBase);
+		LastName.sendKeys(CustomerLastNameInDataBase);
+		Email.sendKeys(email);
 //		Telephone.sendKeys(TelePhone);
 //		TheFax.sendKeys(TheFaxNumber);
-//		AddressOne.sendKeys(TheAddressOne);
+		AddressOne.sendKeys(address);
 //		;
 //
-//		TheCityInput.sendKeys(theCity);
+		TheCityInput.sendKeys(theCity);
 //
-//		ThePostalCode.sendKeys(postalCode);
+		ThePostalCode.sendKeys(ThePostalcode);
 //
-//		LoginName.sendKeys(LOGINAME);
-//		ThePassword.sendKeys(Password);
-//		TheConfirmPassword.sendKeys(Password);
-//		AgreeCheckBox.click();
-//		CountinueButton.click();
-//		Thread.sleep(5000);
-//		String ActualSignUpMessage = driver.findElement(By.className("maintext")).getText();
-//
-//		// test case ( بتقارن القيمة الحقيقة بالمتوقعة وبتشتغل زي ال if )
-//		Assert.assertEquals(ActualSignUpMessage, ExpectedTextForTheSignUp);
+		LoginName.sendKeys(loginName+randomNumberForTheEmail);
+		ThePassword.sendKeys(password);
+		TheConfirmPassword.sendKeys(password);
+		AgreeCheckBox.click();
+		CountinueButton.click();
+		Thread.sleep(5000);
+		String ActualSignUpMessage = driver.findElement(By.className("maintext")).getText();
+
+		// test case ( بتقارن القيمة الحقيقة بالمتوقعة وبتشتغل زي ال if )
+		Assert.assertEquals(ActualSignUpMessage, ExpectedTextForTheSignUp);
 
 	}
-	
+
 //	@Test (priority = 6,enabled = false)
 //	public void LogoutTest() throws InterruptedException {
 //		
